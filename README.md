@@ -27,7 +27,7 @@ $ pypy ./data/cvrp_32.json ./out.json {TIME_LIMIT:30,SEED:0}                    
 - `your-instance.json` json file containing information about the problem, you can see the required fields in instances in `data`
 - `your-output.json` path to the output file, the file does not have to exist, but the directories leading to it must exist.
 - `your-config` a python-like dictionary without any white-spaces and quotas, look into `CVRPSolver.CVRP.CVRP.configuration` for more information on the `configuration space`
- ![TIP]
- -- Running the solver for more then few minutes (~5 minutes using pypy) is probably a waste of time, trying other configurations, or the same configuration with different seeds, instead should lead to better outcome.
- -- Checkout LARGE_CONFIGS and SMALL_CONFIGS for other performent configurations.
- -- Try runnig a few solver instances in parallel. (You will have to implement it yourself)
+> [!TIP]
+> Running the solver for more then few minutes (~5 minutes using pypy) is probably a waste of time, trying other configurations, or the same configuration with different seeds, instead should lead to better outcome.
+> Checkout LARGE_CONFIGS and SMALL_CONFIGS for other performent configurations.
+> Try runnig a few solver instances in parallel. (You will have to implement it yourself)
