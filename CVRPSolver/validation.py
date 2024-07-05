@@ -1,6 +1,18 @@
 import json
 
 
+def route_distance(route, distance_matrix):
+    total = 0
+    for i in range(1, len(route)):
+        prev_loc, curr_loc = route[i - 1], route[i]
+        total += distance_matrix[prev_loc][curr_loc]
+    return total
+
+
+def total_traveled_distance(routes, distance_matrix):
+    return sum([route_distance(route, distance_matrix) for route in routes])
+
+
 def validate(instance_path, solution_path):
     with open(instance_path) as f:
         instance = json.load(f)
@@ -27,12 +39,4 @@ def validate(instance_path, solution_path):
         assert route[0] == 0 and route[-1] == 0
         assert 0 not in route[1:-1]
 
-    def total_route_distance(route, distance_matrix):
-        total = 0
-        for i in range(1, len(route)):
-            prev_loc, curr_loc = route[i - 1], route[i]
-            total += distance_matrix[prev_loc][curr_loc]
-        return total
-
-    total_distance = sum([total_route_distance(route, distance_matrix) for route in routes])
-    return total_distance, instance['GlobalBestTotalDistance']
+    return total_traveled_distance(routes, distance_matrix), instance['GlobalBestTotalDistance']
