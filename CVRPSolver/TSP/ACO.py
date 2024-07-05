@@ -7,23 +7,23 @@ EPS = 10**(-5)
 
 class Pheromones:
     def __init__(self, nodes, initial):
-        self.pheromones = [[1] * nodes for _ in range(nodes)]
+        self.pheromones = [[1] * nodes for _ in range(nodes)]  # TODO: this could be a class atribute, similarly to Memo
         self.delta = [[0] * nodes for _ in range(nodes)]
         for a, b in zip(range(nodes), range(1, nodes)):
             self.pheromones[a][b] = self.pheromones[b][a] = initial
         self.pheromones[nodes - 1][0] = self.pheromones[0][nodes - 1] = initial
-    
+
     def evaporate(self, evaporation):
         for i in range(len(self.pheromones)):
             for j in range(i + 1, len(self.pheromones)):
                 delta = self.delta[i][j] + self.delta[j][i]
                 self.pheromones[i][j] = self.pheromones[j][i] = (1 - evaporation) * self.pheromones[i][j] + delta
                 self.delta[i][j] = self.delta[j][i] = 0
-    
+
     def ant_update(self, path, traveled_distance):
         for a, b in zip(path, path[1:] + [path[0]]):
             self.delta[a][b] += 1 / traveled_distance
-    
+
     def __getitem__(self, idx):
         return self.pheromones[idx]
 
@@ -41,7 +41,7 @@ def ACO(route, dist, end, conf=DEFAULT_CONFIG):
         if visited[j]:
             return 0
         return pow(pheromones[i][j], conf["TSP_ALPHA"]) * pow(distance(i, j) + EPS, -conf["TSP_BETA"])
-    
+
     def extract_route(path):
         j = path.index(0)
         return [0 if i == 0 else route[i - 1] for i in path[j + 1 :] + path[:j]]
