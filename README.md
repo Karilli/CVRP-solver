@@ -14,14 +14,12 @@ The CVRP solver uses a hierarchical approach to efficiently solve the problem by
   - For smaller sub-problems (i.e., individual routes within the CVRP), the solver uses specialized TSP solvers.
     - Dijkstra-like Algorithm and Dynamic Programming (DP): Used for very small TSP instances.
     - Ant Colony Optimization (ACO): For larger TSP instances.
-> [!TIP]
+> [!NOTE]
 > For more in-depth understanding of the solver, look into `showcase.ipynb` or the source code of `CVRPSolver`.
 
 
 # HPO and configuration
 The hyper-parameters are optimized using script in [hpo.py](hpo.py) and [amltk](https://automl.github.io/amltk/latest/) for instances in [data](data) folder. The best configurations are stored in lists LARGE_CONFIGS and SMALL_CONFIGS, sorted by their performance on instances in `data`, with the best configurations at the beginning of the lists (see [usage.ipynb](usage.ipynb) for more information). 
-> [!TIP]
-> You can configure the solver by passing arguments via `conf` parameter of function `solver` or by providing additional parameter in terminal. 
 
 # Usage
 To learn the python API, look into the [usage.ipynb](usage.ipynb). You can also use the solver from terminal. I strongly suggest using different interpreter then python, to make the solver faster.
