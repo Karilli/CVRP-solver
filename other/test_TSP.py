@@ -15,7 +15,8 @@ TSP_CONFIG = {
     "TSP_ALPHA": 3,
     "TSP_BETA": 3,
     "TSP_EVAPORATION": 0.3,
-    "TSP_ANTS": 100
+    "TSP_ANTS": 100,
+    "TSP_INITIAL": 1,
 }
 
 
