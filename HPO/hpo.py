@@ -13,13 +13,13 @@ from time import perf_counter
 
 SOLVER = "./main.py"
 DATA = "./data"
-TEMP = "./SMAC-large"
+TEMP = "./SMAC-test"
 
-INSTANCES = [195, 336, 670, 979]  # [32, 45, 55, 66, 78, 80]
+INSTANCES = [32, 45, 55, 66, 78, 80]  # [195, 336, 670, 979]
 SEED = 42
 OPT_NAME = "CVRP"
-TIME = 0
-BUDGET=(1, 5*60)
+TIME = (1, 10*60)
+BUDGET=(1, 10)
 N_WORKERS = 2
 
 
@@ -153,12 +153,10 @@ def main():
     bucket = PathBucket(".")
     for report in history:
         del report.trial.summary["times"]
-        cvrp_195, cvrp_336, cvrp_670, cvrp_979 = report.trial.summary["res"]
+        res = report.trial.summary["res"]
         del report.trial.summary["res"]
-        report.trial.summary["cvrp_195"] = cvrp_195
-        report.trial.summary["cvrp_336"] = cvrp_336
-        report.trial.summary["cvrp_670"] = cvrp_670
-        report.trial.summary["cvrp_979"] = cvrp_979
+        for i, score in enumerate(res):
+            report.trial.summary[f"cvrp_{INSTANCES[i]}"] = score
 
     df = history.df()
     bucket[f"{TEMP}.csv"] = df
