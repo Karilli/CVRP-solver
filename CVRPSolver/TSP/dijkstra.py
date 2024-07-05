@@ -13,7 +13,10 @@ class Memo:
     def resize(cls, n):
         cls.N = max(MIN_MEMO_SIZE, n)
         cls.MEMO = [[inf] * (1 << cls.N) for _ in range(cls.N)]
-        cls.MASK_TO_NODES = tuple(tuple(i for i in range(cls.N+1) if (1 << i) & mask) for mask in range(2**(cls.N+1)))
+        cls.MASK_TO_NODES = tuple(
+            tuple(i for i in range(cls.N+1) if (1 << i) & mask)
+            for mask in range(1 << (cls.N+1))
+        )
 
     @classmethod
     def init(cls, n, route, dist):
@@ -65,7 +68,32 @@ def dijkstra(route, dist):
 
 
 def dp(route, dist):
+    # NOTE: this was created by GPT, idk how it works, but it definitely works
+    # TODO: precomputing it in Memo could be faster
     def generate_masks(m):
+        """
+        Generates a sequence of all unique numbers with a bit_length of m (with trailing zeroes)
+        that contain at least two 1 bits, ensuring that each pair of consecutive numbers in the
+        sequence has the first number with fewer or equal 1 bits compared to the following number.
+
+        In other words, if S is the generated sequence of m, it holds that:
+        ```
+        N = len(S)
+        for i in range(N):
+            assert 2 <= S[i].bit_count() 
+        
+        for a1, a2 in zip(S, S[1:]):
+            assert a1.bit_count() <= a2.bit_count()
+        
+        assert N == len(set(S))             # the numbers are unique
+        assert N == 2**m - m - 1            # and there are all of them
+        assert all(2 < a < 2**m for a in S) # ...
+        ```
+
+        >>> N = 4
+        >>> [bin(n)[2:].ljust(N, "0") for n in generate_masks(N)]
+        ['0011', '0101', '0110', '1001', '1010', '1100', '0111', '1011', '1101', '1110', '1111']
+        """
         for n in range(2, m+1):
             max_num = 1 << m
             num = (1 << n) - 1
