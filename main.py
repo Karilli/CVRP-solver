@@ -1,11 +1,11 @@
 import json
 import sys
 
-from CVRPSolver.CVRP.CVRP import solve
+from CVRPSolver import solve
 
 
 def parse(elem):
-    elem = "".join(c for c in elem if c.isspace() and c != "'" and c != '"')
+    elem = "".join(c for c in elem if not c.isspace() and c != "'" and c != '"')
     if elem.lower() == "true":
         return True
     if elem.lower() == "false":
@@ -21,7 +21,7 @@ def parse(elem):
 def main(instance_path, output_path, conf={}):
     if isinstance(conf, str):
         conf = [items.split(":") for items in conf[1:-1].split(",")]
-        conf = {k: parse(v) for k, v in conf}
+        conf = {parse(k): parse(v) for k, v in conf}
 
     with open(instance_path) as f:
         instance = json.load(f)

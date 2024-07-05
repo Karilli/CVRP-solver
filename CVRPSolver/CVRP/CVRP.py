@@ -9,11 +9,11 @@ from CVRPSolver.CVRP.heuristics import (
     destroy_random,
     destroy_shaw_removal,
     repair_best,
-    repair_random,
+    # repair_random,
     repair_regret,
     repair_farthest,
-    destroy_shaw_removal_route,
-    destroy_random_route,
+    # destroy_shaw_removal_route,
+    # destroy_random_route,
 )
 from CVRPSolver.CVRP.configuration import check_user_configuration
 from CVRPSolver.CVRP.initial import generate_initial_solution
@@ -47,31 +47,25 @@ def solve(dist, locations, demands, N, C, conf={}):
         for h in DESTROY_HEURISTICS + REPAIR_HEURISTICS:
             misses[h] = conf["VNS_MISSSES_INIT"]
 
-        if conf["INITIAL_STRATEGY"] == "GREEDY_ALL_ROUTES_RANDOMIZED":
-            best = sol = generate_initial_solution(dist, locations, demands, N, C, "GREEDY_ALL_ROUTES_RANDOMIZED", T=conf["GREEDY_ALL_ROUTES_RANDOMIZED_T"])
-        else:
-            best = sol = generate_initial_solution(dist, locations, demands, N, C, conf["INITIAL_STRATEGY"])
-
+        best = sol = generate_initial_solution(dist, locations, demands, N, C, conf["INITIAL_STRATEGY"], T=conf["GREEDY_ALL_ROUTES_RANDOMIZED_T"])
         while time.time() < end:
             new_sol = VNS(sol, misses, conf, end)
             if random.random() < conf["REOPTIMIZE_CHANCE"]:
                 reoptimize_routes(new_sol, end, conf)
             if new_sol.objective() < sol.objective():
                 sol = new_sol
-            if sol.is_feasible() and sol < best:
-                best = sol
+                if new_sol.is_feasible() and new_sol < best:
+                    best = new_sol
         return best
-    
-    conf = check_user_configuration(conf)
-    start = time.time()
-    ends = [start + i * conf["TIME_LIMIT"] / conf["TRIES"] for i in range(1, conf["TRIES"] + 1)]
 
+    start = time.time()
+    conf = check_user_configuration(conf)
     random.seed(conf["SEED"])
     Tabu.init(min(conf["TABU_LEN"], len(demands) - 3))
     Solution.CAPACITY_PENALTY = conf["CAPACITY_PENALTY"]
     Memo.resize(conf["TSP_EXACT_THRESHOLD"])
-
     seeds = [random.randint(0, 10**6) for _ in range(conf["TRIES"])]
+    ends = [start + i * conf["TIME_LIMIT"] / conf["TRIES"] for i in range(1, conf["TRIES"] + 1)]
     return min(help(seed, end) for seed, end in zip(seeds, ends))
 
 

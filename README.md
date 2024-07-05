@@ -17,16 +17,16 @@ The CVRP solver uses a hierarchical approach to efficiently solve the problem by
 > [!NOTE]
 > For more in-depth understanding of the solver, look into `showcase.ipynb` or the source code of `CVRPSolver`.
 
-
 # HPO and configuration
 The hyper-parameters are optimized using script in [hpo.py](hpo.py) and [amltk](https://automl.github.io/amltk/latest/) for instances in [data](data) folder. The best configurations are stored in lists LARGE_CONFIGS and SMALL_CONFIGS, sorted by their performance on instances in `data`, with the best configurations at the beginning of the lists (see [usage.ipynb](usage.ipynb) for more information). 
 
 # Usage
 To learn the python API, look into the [usage.ipynb](usage.ipynb). You can also use the solver from terminal. I strongly suggest using different interpreter then python, to make the solver faster.
 ```
-$ pypy ./main.py <your-instance.json> <your-output.json>                # run the solver from terminal
-$ pypy ./main.py <your-instance.json> <your-output.json> <your-config>  # you can add a configuration
-$ pypy ./main.py ./data/cvrp_32.json ./out.json {TIME_LIMIT:30,SEED:0}  # concrete example
+$ pypy3 ./main.py <your-instance.json> <your-output.json>                         # run the solver from terminal
+$ pypy3 ./main.py <your-instance.json> <your-output.json> <your-config>           # you can add a configuration
+$ pypy3 ./main.py ./data/cvrp_32.json ./out.json '{"TIME_LIMIT":30, "SEED":0}'    # concrete example - make sure to pass config as 1 argument
+$ pypy3 ./main.py ./data/cvrp_32.json ./out.json '{"TIME_LIMIT" : 30, SEED:"0"}'  # quotas around values and white-spaces are ignored
 ```
 - `your-instance.json` json file containing information about the problem, you can see the required fields in instances in `data`
 - `your-output.json` path to the output file, the file does not have to exist, but the directories leading to it must exist.
