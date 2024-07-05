@@ -24,9 +24,9 @@ The hyper-parameters are optimized using script in [hpo.py](hpo.py) and [amltk](
 # Usage
 To learn the python API, look into the [usage.ipynb](usage.ipynb). You can also use the solver from terminal. I strongly suggest using different interpreter then python, to make the solver faster.
 ```
-$ pypy CVRP.solver/main.py <your-instance.json> <your-output.json>               # run the solver from terminal
-$ pypy CVRP.solver/main.py <your-instance.json> <your-output.json> <your-config> # you can add a configuration
-$ pypy ./data/cvrp_32.json ./out.json {TIME_LIMIT:30,SEED:0}                     # concrete example
+$ pypy ./main.py <your-instance.json> <your-output.json>                # run the solver from terminal
+$ pypy ./main.py <your-instance.json> <your-output.json> <your-config>  # you can add a configuration
+$ pypy ./main.py ./data/cvrp_32.json ./out.json {TIME_LIMIT:30,SEED:0}  # concrete example
 ```
 - `your-instance.json` json file containing information about the problem, you can see the required fields in instances in `data`
 - `your-output.json` path to the output file, the file does not have to exist, but the directories leading to it must exist.
