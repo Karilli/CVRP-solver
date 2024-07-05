@@ -38,7 +38,7 @@ $ pypy3 ./main.py ./data/cvrp_32.json ./out.json '{"TIME_LIMIT" : 30, SEED:"0"}'
 
 # Ideas for future
 * learn neural network as destroy/repair heuristic
-* repair heuristic, that does not take into a count the second route to depot
+* repair heuristic, that does not take into a count the second route to depot (easier creation of new routes)
 * start with random subset of locations, optimize it, iteratively add a few random locations 
   * dont start with random subset, but with locations nearest to depot
 * repair heuristic that starts with the smallest route and adds the best locations until the capacity is exhausted
@@ -48,3 +48,6 @@ $ pypy3 ./main.py ./data/cvrp_32.json ./out.json '{"TIME_LIMIT" : 30, SEED:"0"}'
 * introduce initial heuristics probability again?
 * alternative acceptance methods
 * use ACO also for CVRP
+* is there a better admissible heuristics to elevate dijkstra to A*?
+* destroy heuristics based on crossing routes
+* revise ACO early stopping condition
