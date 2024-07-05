@@ -36,8 +36,8 @@ $ pypy3 ./main.py ./data/cvrp_32.json ./out.json '{"TIME_LIMIT" : 30, SEED:"0"}'
 > Checkout LARGE_CONFIGS and SMALL_CONFIGS for other performent configurations.
 > Try runnig a few solver instances in parallel.
 
-# Ideas for future
-* learn neural network as destroy/repair heuristic
+# Ideas for future (my TODO list)
+* learn neural network as destroy/repair heuristic (and maybe for initial solution)
 * repair heuristic, that does not take into a count the second route to depot (easier creation of new routes)
 * start with random subset of locations, optimize it, iteratively add a few random locations 
   * dont start with random subset, but with locations nearest to depot
@@ -45,9 +45,14 @@ $ pypy3 ./main.py ./data/cvrp_32.json ./out.json '{"TIME_LIMIT" : 30, SEED:"0"}'
 * try destroy route heuristics with lower probability
   * or dont destroy the whole route
   * choose only destroy route heuristics or only other destroy heuristics
-* introduce initial heuristics probability again?
+* introduce heuristics probabilities again?
 * alternative acceptance methods
 * use ACO also for CVRP
 * is there a better admissible heuristics to elevate dijkstra to A*?
 * destroy heuristics based on crossing routes
 * revise ACO early stopping condition
+* revise initial solutions, add randomization and "factor" parameters
+* population of solutions
+* more instances for HPO, two splits for HPO and validation
+* adaptive destroy degree
+* introudce adaptive VNS budget again?
