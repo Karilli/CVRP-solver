@@ -18,7 +18,7 @@ TEMP = "./SMAC-large"
 INSTANCES = [195, 336, 670, 979]  # [32, 45, 55, 66, 78, 80]
 SEED = 42
 OPT_NAME = "CVRP"
-TIME = 12*60*60
+TIME = 0
 BUDGET=(1, 5*60)
 N_WORKERS = 2
 
@@ -151,7 +151,16 @@ def main():
         seed=SEED
     )
     bucket = PathBucket(".")
-    df = history.df(profiles=True, configs=True, summary=False, metrics=True)
+    for report in history:
+        del report.trial.summary["times"]
+        cvrp_195, cvrp_336, cvrp_670, cvrp_979 = report.trial.summary["res"]
+        del report.trial.summary["res"]
+        report.trial.summary["cvrp_195"] = cvrp_195
+        report.trial.summary["cvrp_336"] = cvrp_336
+        report.trial.summary["cvrp_670"] = cvrp_670
+        report.trial.summary["cvrp_979"] = cvrp_979
+
+    df = history.df()
     bucket[f"{TEMP}.csv"] = df
 
     print(f"Number of configurations: {len(history)}")
