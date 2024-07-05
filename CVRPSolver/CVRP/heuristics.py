@@ -1,4 +1,5 @@
 from math import inf, dist
+from functools import partial
 import random
 
 
@@ -114,7 +115,7 @@ def repair_best(sol, max_k):
     sol.add(car, idx, loc)
 
 
-def repair_farthest(sol, max_k=None):
+def repair_farthest(sol, **args):
     _, loc = max((sol.dist[0][loc], loc) for loc in sol.unassigned)
     _, car, idx, loc = min(
         (sol.incremental_add(car, idx, loc), car, idx, loc)
@@ -124,7 +125,7 @@ def repair_farthest(sol, max_k=None):
     sol.add(car, idx, loc)
 
 
-def repair_random(sol, max_k=None):
+def repair_random(sol, **args):
     loc = random.choice(list(sol.unassigned))
     car, idx = random.choice([
         (car, idx)
@@ -134,3 +135,5 @@ def repair_random(sol, max_k=None):
     sol.add(car, idx, loc)
 
 
+destroy_shaw_worst = partial(destroy_shaw_removal, destroy_heuristic=destroy_worst)
+destroy_shaw_random = partial(destroy_shaw_removal, destroy_heuristic=destroy_random)

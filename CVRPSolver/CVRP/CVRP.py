@@ -7,7 +7,8 @@ from CVRPSolver.CVRP.heuristics import (
     Tabu,
     destroy_worst,
     destroy_random,
-    destroy_shaw_removal,
+    destroy_shaw_worst, 
+    destroy_shaw_random,
     repair_best,
     # repair_random,
     repair_regret,
@@ -25,15 +26,15 @@ from CVRPSolver.TSP.dijkstra import Memo
 DESTROY_HEURISTICS = [
     destroy_worst,
     destroy_random,
-    partial(destroy_shaw_removal, destroy_heuristic=destroy_worst), 
-    partial(destroy_shaw_removal, destroy_heuristic=destroy_random),
-    # destroy_random_route,
-    # destroy_shaw_removal_route
+    destroy_shaw_worst, 
+    destroy_shaw_random,
+    # destroy_random_route,  # NOTE: bad heuristic
+    # destroy_shaw_removal_route,  # NOTE: bad heuristic
 ]
 
 REPAIR_HEURISTICS = [
     repair_best,
-    # repair_random, 
+    # repair_random,  # NOTE: bad heuristic
     repair_regret,
     repair_farthest
 ]
@@ -58,6 +59,7 @@ def solve(dist, locations, demands, N, C, conf={}):
                     best = new_sol
         return best
 
+    # NOTE: first try is responsible for initialization and therefore has less time then other tries
     start = time.time()
     conf = check_user_configuration(conf)
     random.seed(conf["SEED"])

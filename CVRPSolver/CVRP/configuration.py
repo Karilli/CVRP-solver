@@ -1,5 +1,6 @@
 from collections import namedtuple
 
+
 CONST = namedtuple("CONST", ["name", "value"])
 INT = namedtuple("INT", ["name", "bounds", "default"])
 FLOAT = namedtuple("FLOAT", ["name", "bounds", "default"])
@@ -344,7 +345,6 @@ SMALL_CONFIGS = [{'CAPACITY_PENALTY': 2647.7266482328023,
   'TSP_TIME_LIMIT': 9.83965790433667,
   'VNS_MAX_ITERATIONS': 164,
   'VNS_MISSSES_INIT': 206}]
-
 
 
 LARGE_CONFIGS = [{'CAPACITY_PENALTY': 467.83540235226,
