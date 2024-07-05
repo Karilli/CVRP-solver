@@ -5,9 +5,10 @@ from CVRPSolver.CVRP.CVRP import solve
 
 
 def parse(elem):
-    if elem == "True":
+    elem = "".join(c for c in elem if c.isspace() and c != "'" and c != '"')
+    if elem.lower() == "true":
         return True
-    if elem == "False":
+    if elem.lower() == "false":
         return False
     if elem.isnumeric():
         return int(elem)

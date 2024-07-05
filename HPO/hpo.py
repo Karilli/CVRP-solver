@@ -1,3 +1,8 @@
+##############################################
+import sys, os                              ##
+sys.path.insert(0, os.path.abspath("."))    ##
+##############################################
+
 import traceback
 from subprocess import Popen
 from sys import stderr, stdout
@@ -13,13 +18,13 @@ from time import perf_counter
 
 SOLVER = "./main.py"
 DATA = "./data"
-TEMP = "./SMAC-test"
+TEMP = "./HPO/SMAC-large"
 
-INSTANCES = [32, 45, 55, 66, 78, 80]  # [195, 336, 670, 979]
+INSTANCES = [195, 336, 670, 979]  # [32, 45, 55, 66, 78, 80]  # 
 SEED = 42
 OPT_NAME = "CVRP"
-TIME = (1, 10*60)
-BUDGET=(1, 10)
+TIME = 0
+BUDGET=(1, 5*60)
 N_WORKERS = 2
 
 
@@ -150,6 +155,7 @@ def main():
         n_workers=N_WORKERS,
         seed=SEED
     )
+    
     bucket = PathBucket(".")
     for report in history:
         del report.trial.summary["times"]

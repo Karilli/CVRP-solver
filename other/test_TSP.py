@@ -1,14 +1,22 @@
-import random, time
+##############################################
+import sys, os                              ##
+sys.path.insert(0, os.path.abspath("."))    ##
+##############################################
+
+import random 
 from math import inf
 from itertools import permutations
 from CVRPSolver import brute_force, ACO, dijkstra, dp
-from CVRPSolver.TSP.dijkstra import Memo
-from time import perf_counter
 
 
 EPS = 1e-5
-N = 10
-MAX = 15
+TSP_CONFIG = {
+    "TSP_TIME_LIMIT": 15,
+    "TSP_ALPHA": 3,
+    "TSP_BETA": 3,
+    "TSP_EVAPORATION": 0.3,
+    "TSP_ANTS": 100
+}
 
 
 def route_distance(route, dist):
@@ -53,15 +61,15 @@ def check_all(route, dist):
     check(*brute_force(route, dist), best, routes, dist)
     check(*dp(route, dist), best, routes, dist)
     try:
-        check(*ACO(route, dist, {"TSP_TIME_LIMIT": 2}), best, routes, dist)
+        check(*ACO(route, dist, TSP_CONFIG), best, routes, dist)
     except:
         pass
     try:
-        check(*ACO(route, dist, {"TSP_TIME_LIMIT": 5}), best, routes, dist)
+        check(*ACO(route, dist, TSP_CONFIG), best, routes, dist)
     except:
         pass
     try:
-        check(*ACO(route, dist, {"TSP_TIME_LIMIT": 15}), best, routes, dist)
+        check(*ACO(route, dist, TSP_CONFIG), best, routes, dist)
     except AssertionError as e:
         a, b, *_ = str(e).split(", ")
         if not (0.9 < float(a) / float(b) < 1.111):  # ACO does not solve the problem exactly, so it can fail sometimes ...
@@ -96,29 +104,6 @@ def main():
         route = random.sample(list(range(1, len(locations))), k=i)
         assert len(route) == len(set(route))
         check_all(route, dist)
-
-##########################
-
-    locations, dist = random_problem(100)
-    Memo.resize(MAX)
-
-    for i in range(1, MAX):
-        res = {}
-        for f in dp, dijkstra, brute_force:
-            total = 0
-            if 10 < i and f is brute_force:
-                res[f] = inf
-                continue
-            for _ in range(N):      
-                route = random.sample(list(range(1, len(locations))), k=i)
-                t = perf_counter()
-                f(route, dist)
-                total += perf_counter() - t
-            res[f] = total / N
-
-        t, _, f = min((res[f], j, str(f).split()[1]) for j, f in enumerate((dp, dijkstra, brute_force)))
-        x = "'"
-        print(f"{i}: ({t}, {f.replace(x, '')})")
 
 
 if __name__ == "__main__":
