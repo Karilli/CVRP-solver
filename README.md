@@ -45,15 +45,16 @@ $ pypy3 ./main.py ./data/cvrp_32.json ./out.json '{"TIME_LIMIT" : 30, SEED:"0"}'
 * try destroy route heuristics with lower probability
   * or dont destroy the whole route
   * choose only destroy route heuristics or only other destroy heuristics
+  * allow destroy for any points, or points on the same route, have "misses" for them also
 * introduce heuristics probabilities again?
 * alternative acceptance methods
 * use ACO also for CVRP
 * is there a better admissible heuristics to elevate dijkstra to A*?
 * destroy heuristics based on crossing routes
 * revise ACO early stopping condition
-* revise initial solutions, add randomization and "factor" parameters
+* revise initial solutions, add "randomization" and "factor" parameters
 * population of solutions
-* more instances for HPO, two splits for HPO and validation
+* more data for HPO, two splits for HPO validation and testing
 * adaptive destroy degree
 * introudce adaptive VNS budget again?
 * port to mojo
