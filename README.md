@@ -58,3 +58,4 @@ $ pypy3 ./main.py ./data/cvrp_32.json ./out.json '{"TIME_LIMIT" : 30, SEED:"0"}'
 * adaptive destroy degree
 * introudce adaptive VNS budget again?
 * port to mojo
+* repair - consider k additions to the solution at once
