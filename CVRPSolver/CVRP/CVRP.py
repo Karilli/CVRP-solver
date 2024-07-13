@@ -60,7 +60,7 @@ def solve(dist, locations, demands, N, C, conf={}):
 
     # NOTE: first try is responsible for initialization and therefore has less time then other tries
     start = time.time()
-    conf = check_user_configuration(conf)
+    conf = check_user_configuration(conf, len(demands))
     random.seed(conf["SEED"])
     Tabu.init(min(conf["TABU_LEN"], len(demands) - 3))
     Solution.CAPACITY_PENALTY = conf["CAPACITY_PENALTY"]

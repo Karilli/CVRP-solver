@@ -58,21 +58,6 @@ except:
             assert False
 
 
-def check_user_configuration(conf):
-    provided = set(conf.keys())
-    allowed = set(DEFAULT_CONFIG.keys()) | {"TIME_LIMIT", "SEED"}
-    assert provided <= allowed, provided - allowed
-
-    new = DEFAULT_CONFIG.copy()
-    for k, v in conf.items():
-        new[k] = v
-    if "TIME_LIMIT" not in new:
-        new["TIME_LIMIT"] = 3*60
-    if "SEED" not in new:
-        new["SEED"] = 0
-    return new
-
-
 SMALL_CONFIGS = [{'CAPACITY_PENALTY': 2647.7266482328023,
   'DESTROY_DEGREE': 0.0042713418927495,
   'GREEDY_ALL_ROUTES_RANDOMIZED_T': 1.7544578757313731,
@@ -653,3 +638,27 @@ LARGE_CONFIGS = [{'CAPACITY_PENALTY': 467.83540235226,
   'TSP_TIME_LIMIT': 5.756650178016544,
   'VNS_MAX_ITERATIONS': 33,
   'VNS_MISSSES_INIT': 222}]
+
+
+def check_user_configuration(conf, number_of_locations=None):
+    if number_of_locations is None:
+        default = DEFAULT_CONFIG
+    elif number_of_locations < 100:
+        default = SMALL_CONFIGS[0]
+    elif 100 <= number_of_locations:
+        default = LARGE_CONFIGS[0]
+    else:
+        assert False
+    
+    provided = set(conf.keys())
+    allowed = set(default.keys()) | {"TIME_LIMIT", "SEED"}
+    assert provided <= allowed, provided - allowed
+
+    new = default.copy()
+    for k, v in conf.items():
+        new[k] = v
+    if "TIME_LIMIT" not in new:
+        new["TIME_LIMIT"] = 3*60
+    if "SEED" not in new:
+        new["SEED"] = 0
+    return new
