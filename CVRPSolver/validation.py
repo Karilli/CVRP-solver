@@ -1,4 +1,5 @@
 import json
+from math import inf
 
 
 def route_distance(route, distance_matrix):
@@ -10,7 +11,7 @@ def route_distance(route, distance_matrix):
 
 
 def total_traveled_distance(routes, distance_matrix):
-    return sum([route_distance(route, distance_matrix) for route in routes])
+    return sum(route_distance(route, distance_matrix) for route in routes)
 
 
 def validate(instance_path, solution_path):
@@ -23,9 +24,10 @@ def validate(instance_path, solution_path):
     distance_matrix = instance["DistanceMatrix"]
     vehicle_capacity = instance["VehicleCapacity"]
     location_demands = instance["LocationDemands"]
+    best = instance['GlobalBestTotalDistance'] if instance['GlobalBestTotalDistance'] is not None else inf
 
     for route in routes:
-        route_total_demand = sum([location_demands[loc] for loc in route])
+        route_total_demand = sum(location_demands[loc] for loc in route)
         assert route_total_demand <= vehicle_capacity
 
     from collections import Counter
@@ -39,4 +41,11 @@ def validate(instance_path, solution_path):
         assert route[0] == 0 and route[-1] == 0
         assert 0 not in route[1:-1]
 
-    return total_traveled_distance(routes, distance_matrix), instance['GlobalBestTotalDistance']
+    score = total_traveled_distance(routes, distance_matrix)
+    if score < best:
+        print(f"New best solution found for {instance_path} - old:{best}, new: {score}.")
+        instance['GlobalBestTotalDistance'] = score
+        with open(instance_path, "w") as f:
+            json.dump(instance, f)
+
+    return score, best

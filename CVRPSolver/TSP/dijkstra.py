@@ -108,7 +108,6 @@ def dp(route, dist):
 
     for mask in generate_masks(n):
         for x in Memo.MASK_TO_NODES[mask]:
-            assert ((1 << x) & mask) != 0
             for y in Memo.MASK_TO_NODES[mask & ~(1 << x)]:
                 Memo.MEMO[x][mask] = min(Memo.MEMO[x][mask], Memo.MEMO[y][mask & ~(1 << x)] + dist[route[x]][route[y]])
 

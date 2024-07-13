@@ -16,7 +16,7 @@ TSP_CONFIG = {
     "TSP_BETA": 3,
     "TSP_EVAPORATION": 0.3,
     "TSP_ANTS": 100,
-    "TSP_INITIAL": 1,
+    "TSP_INITIAL_PHEROMONE": 1,
 }
 
 
@@ -73,7 +73,7 @@ def check_all(route, dist):
         check(*ACO(route, dist, TSP_CONFIG), best, routes, dist)
     except AssertionError as e:
         a, b, *_ = str(e).split(", ")
-        if not (0.9 < float(a) / float(b) < 1.111):  # ACO does not solve the problem exactly, so it can fail sometimes ...
+        if not (0.9 < float(a) / float(b) < 1.111):  # NOTE: ACO does not solve the problem exactly, so it can fail sometimes ...
             raise e
 
 

@@ -1,6 +1,5 @@
 import time
 import random
-from functools import partial
 from collections import Counter
 
 from CVRPSolver.CVRP.heuristics import (
