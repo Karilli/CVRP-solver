@@ -8,10 +8,12 @@ from CVRPSolver.CVRP.heuristics import (
     destroy_random,
     destroy_shaw_worst, 
     destroy_shaw_random,
+    destroy_crossed_lines,
     repair_best,
     # repair_random,
     repair_regret,
     repair_farthest,
+    repair_best_2,
     # destroy_shaw_removal_route,
     # destroy_random_route,
 )
@@ -29,13 +31,15 @@ DESTROY_HEURISTICS = [
     destroy_shaw_random,
     # destroy_random_route,  # NOTE: bad heuristic
     # destroy_shaw_removal_route,  # NOTE: bad heuristic
+    destroy_crossed_lines,
 ]
 
 REPAIR_HEURISTICS = [
     repair_best,
     # repair_random,  # NOTE: bad heuristic
     repair_regret,
-    repair_farthest
+    repair_farthest,
+    repair_best_2
 ]
 
 
