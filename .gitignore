@@ -5,3 +5,4 @@ out.json
 HPO/SMAC*
 !HPO/SMAC*.csv
 *temp
+*run_all.py

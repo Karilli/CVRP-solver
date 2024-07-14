@@ -142,11 +142,11 @@ def destroy_crossed_lines(sol):
                 return
 
 
-def repair_regret(sol, max_k):
+def repair_regret(sol):
     mn1, i1, j1 = inf, -1, -1
     mn2, i2, j2 = inf, -1, -1
     res = []
-    for loc in random.sample(list(sol.unassigned), k=min(len(sol.unassigned), max_k)):
+    for loc in sol.unassigned:
         for car, route in enumerate(sol):
             for idx in range(len(route) + 1):
                 new_obj = sol.incremental_add(car, idx, loc)
@@ -159,25 +159,35 @@ def repair_regret(sol, max_k):
     sol.add(i, j, k)
 
 
-def repair_best(sol, max_k):
+def repair_best(sol):
     _, car, idx, loc = min(
         (sol.incremental_add(car, idx, loc), car, idx, loc)
-        for loc in random.sample(list(sol.unassigned), k=min(len(sol.unassigned), max_k))
+        for loc in sol.unassigned
         for car, route in enumerate(sol)
         for idx in range(len(route) + 1)
     )
     sol.add(car, idx, loc)
 
 
-def repair_best_2(sol, max_k):
+def select_random_repair_best(sol):
+    loc = random.choice(list(sol.unassigned))
+    _, car, idx = min(
+        (sol.incremental_add(car, idx, loc), car, idx)
+        for car, route in enumerate(sol)
+        for idx in range(len(route) + 1)
+    )
+    sol.add(car, idx, loc)
+
+
+def repair_best_2(sol):
     def possible_adds():
-        for loc in random.sample(list(sol.unassigned), k=min(len(sol.unassigned), max_k)):
+        for loc in sol.unassigned:
             for car, route in enumerate(sol):
                 for idx in range(len(route) + 1):
                     yield car, idx, loc
 
     if len(sol.unassigned) == 1:
-        return repair_best(sol, max_k)
+        return repair_best(sol)
 
     mn, car1_, idx1_, loc1_, car2_, idx2_, loc2_ = inf, None, None, None, None, None, None
 
@@ -193,7 +203,7 @@ def repair_best_2(sol, max_k):
     sol.add(car2_, idx2_, loc2_)
 
 
-def repair_farthest(sol, max_k=None):
+def repair_farthest(sol):
     _, loc = max((sol.dist[0][loc], loc) for loc in sol.unassigned)
     _, car, idx, loc = min(
         (sol.incremental_add(car, idx, loc), car, idx, loc)
@@ -203,7 +213,7 @@ def repair_farthest(sol, max_k=None):
     sol.add(car, idx, loc)
 
 
-def repair_random(sol, max_k=None):
+def repair_random(sol):
     loc = random.choice(list(sol.unassigned))
     car, idx = random.choice([
         (car, idx)
