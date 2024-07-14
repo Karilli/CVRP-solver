@@ -89,32 +89,31 @@ def destroy_random(sol):
 
 
 def do_intersect(p1x, p1y, q1x, q1y, p2x, p2y, q2x, q2y):
-    def on_segment(px, py, qx, qy, rx, ry):
-        return all((
-            min(px, rx) <= qx <= max(px, rx),
-            min(py, ry) <= qy <= max(py, ry),
-        ))
+    # def on_segment(px, py, qx, qy, rx, ry):
+    #     return all((
+    #         min(px, rx) <= qx <= max(px, rx),
+    #         min(py, ry) <= qy <= max(py, ry),
+    #     ))
 
-    def sign(x):
+    def orientation(px, py, qx, qy, rx, ry):
+        x = (qy - py) * (rx - qx) - (qx - px) * (ry - qy)
         if x == 0:
             return 0
         return abs(x) / x
-
-    def orientation(px, py, qx, qy, rx, ry):
-        return sign((qy - py) * (rx - qx) - (qx - px) * (ry - qy))
 
     o1 = orientation(p1x, p1y, q1x, q1y, p2x, p2y)
     o2 = orientation(p1x, p1y, q1x, q1y, q2x, q2y)
     o3 = orientation(p2x, p2y, q2x, q2y, p1x, p1y)
     o4 = orientation(p2x, p2y, q2x, q2y, q1x, q1y)
 
-    return any((
-        o1 != o2 and o3 != o4, 
-        o1 == 0 and on_segment(p1x, p1y, p2x, p2y, q1x, q1y),
-        o2 == 0 and on_segment(p1x, p1y, q2x, q2y, q1x, q1y),
-        o3 == 0 and on_segment(p2x, p2y, p1x, p1y, q2x, q2y),
-        o4 == 0 and on_segment(p2x, p2y, q1x, q1y, q2x, q2y),
-    ))
+    return o1 != o2 and o3 != o4
+    # return any((
+    #     o1 != o2 and o3 != o4, 
+    #     o1 == 0 and on_segment(p1x, p1y, p2x, p2y, q1x, q1y),
+    #     o2 == 0 and on_segment(p1x, p1y, q2x, q2y, q1x, q1y),
+    #     o3 == 0 and on_segment(p2x, p2y, p1x, p1y, q2x, q2y),
+    #     o4 == 0 and on_segment(p2x, p2y, q1x, q1y, q2x, q2y),
+    # ))
 
 
 def destroy_crossed_lines(sol):

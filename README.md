@@ -37,25 +37,26 @@ $ pypy3 ./main.py ./data/cvrp_32.json ./out.json '{"TIME_LIMIT" : 30, SEED:"0"}'
 > Try runnig a few solver instances in parallel.
 
 # Ideas for future (my TODO list)
-* learn neural network as destroy/repair heuristic (and maybe for initial solution)
-* repair heuristic, that does not take into a count the second route to depot (easier creation of new routes)
-* start with random subset of locations, optimize it, iteratively add a few random locations 
-  * dont start with random subset, but with locations nearest to depot
-* repair heuristic that starts with the smallest route and adds the best locations until the capacity is exhausted
-* try destroy route heuristics with lower probability
-  * or dont destroy the whole route
-  * choose only destroy route heuristics or only other destroy heuristics
-  * allow destroy for any points, or points on the same route, have "misses" for them also
-* introduce heuristics probabilities again?
-* alternative acceptance methods
-* use ACO also for CVRP
-* is there a better admissible heuristics to elevate dijkstra to A*?
-* destroy heuristics based on crossing routes
-* revise ACO early stopping condition
-* revise initial solutions, add "randomization" and "factor" parameters
-* population of solutions
-* more data for HPO, two splits for HPO validation and testing
-* adaptive destroy degree
-* introudce adaptive VNS budget again?
-* port to mojo
-* repair - consider k additions to the solution at once
+[] learn neural network as destroy/repair heuristic (and maybe for initial solution)
+[] repair heuristic, that does not take into a count the second route to depot (easier creation of new routes)
+[] start with random subset of locations, optimize it, iteratively add a few random locations 
+  [] dont start with random subset, but with locations nearest to depot
+[] repair heuristic that starts with the smallest route and adds the best locations until the capacity is exhausted
+[] try destroy route heuristics with lower probability
+  [] or dont destroy the whole route
+  [] choose only destroy route heuristics or only other destroy heuristics
+  [] allow destroy for any points, or points on the same route, have "misses" for them also
+[] introduce heuristics probabilities again?
+[] alternative acceptance methods
+[] use ACO also for CVRP
+[] is there a better admissible heuristics to elevate dijkstra to A[]?
+[x] destroy heuristics based on crossing routes
+[] revise ACO early stopping condition
+[] revise initial solutions, add "randomization" and "factor" parameters
+[] population of solutions
+[] more data for HPO, two splits for HPO validation and testing
+[] adaptive destroy degree
+[] introudce adaptive VNS budget again?
+[] port to mojo
+[x] repair - consider k additions to the solution at once
+[] repair - consider putting location only to vehicles that contain other nearest locations
