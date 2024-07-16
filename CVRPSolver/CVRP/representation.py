@@ -22,7 +22,7 @@ class Solution:
             + self.dist[0][route[0]]
             + self.dist[route[-1]][0]
         )
-    
+
     def routes_objective(self):
         return sum(self.route_objective(route) for route in self)
 

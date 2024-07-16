@@ -57,11 +57,13 @@ $ pypy3 ./main.py ./data/cvrp_32.json ./out.json '{"TIME_LIMIT" : 30, SEED:"0"}'
   [x] crossing routes
   [] neural net
   [] probabilities
+  [] change/dont change heuristics during VNS
 - repair heuristics
   [x] consider k additions to the solution at once
   [] consider putting location only to vehicles that contain other nearest locations
   [] neural net
   [] probabilities
+  [] change/dont change heuristics during VNS
 - other
   [] port to mojo
   [] more data for HPO, two splits for HPO validation and testing
